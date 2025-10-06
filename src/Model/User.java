@@ -1,60 +1,53 @@
 package Model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
- * Represents a user of the application
- * @author rene-rekowski
- * @version 1.0
+ * Repräsentiert einen Benutzer mit Namen, Geburtstag und einer Liste von Events.
  */
 public class User {
-	/** the name of the user (must not be null or empty). */
-	private String name;
-	
-	/** A list containing all Events by this user */
-	private List<Event> events;
-	
-	public User(String name) {
-		if(name == null || name.isBlank()) {
-			throw new IllegalArgumentException("User name must not be null or empty");
-		}
-		this.name = name;
-		this.events = new ArrayList<Event>();
-	}
-	
-	public String getName() {
-		return name;
-	}
-	
-	public void setName(String name) {
-		if(name == null || name.isBlank()) {
-			throw new IllegalArgumentException("User name must not be null or empty");
-		}
-		this.name = name;
-	}
-	
-	public List<Event> getEvents(){
-		return events;
-	}
-	
-	public void addEvent(Event newEvent) {
-		if(newEvent == null) {
-			throw new IllegalArgumentException("Event must not be Null");
-		}
-		this.events.add(newEvent);
-	}
-	
-	public boolean removeEvent(Event event){
-		if(event == null) {
-			return false;
-		}
-		return this.events.remove(event);
-	}
-	
-	@Override
-	public String toString() {
-		return "User{name='" + name +"'}";
-	}
+    private final String name;
+    private final LocalDate birthday;
+    private final List<Event> events;
 
+    public User(String name, LocalDate birthday) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Name darf nicht leer sein.");
+        }
+        if (birthday == null) {
+            throw new IllegalArgumentException("Geburtsdatum darf nicht null sein.");
+        }
+        this.name = name;
+        this.birthday = birthday;
+        this.events = new ArrayList<>();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void addEvent(Event event) {
+        events.add(event);
+    }
+
+    public void clearEvents() {
+        events.clear();
+    }
+
+    @Override
+    public String toString() {
+        return name + " (" + birthday + ")";
+    }
 }
+
