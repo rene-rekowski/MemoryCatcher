@@ -24,7 +24,7 @@ public class UserController {
 		users.add(new User(name, birthday));
 	}
 		
-	public List<User> getUser(){
+	public List<User> getUsers(){
 		return users;
 	}
 	

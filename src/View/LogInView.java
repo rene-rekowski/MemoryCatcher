@@ -1,11 +1,13 @@
 package View;
 
-
 import Controller.UserController;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import Model.User;
@@ -15,19 +17,19 @@ import Model.User;
  */
 public class LogInView {
 
-    private final ViewManager viewManager;
-    private final UserController userController;
+	private final ViewManager viewManager;
+	private final UserController userController;
 
-    public LogInView(ViewManager viewManager, UserController userController) {
-        this.viewManager = viewManager;
-        this.userController = userController;
-    }
+	public LogInView(ViewManager viewManager, UserController userController) {
+		this.viewManager = viewManager;
+		this.userController = userController;
+	}
 
-    public Scene createScene() {
+	public Scene createScene() {
         Label title = new Label("MemoryCatcher");
         Button createUserButton = new Button("Create User");
         Button exitButton = new Button("Exit");
-        ListView<User> userListView = new ListView<>(userController.getUsers());
+        ListView<User> userListView = new ListView<>(FXCollections.observableArrayList(userController.getUsers()));
 
         createUserButton.setOnAction(e -> viewManager.showCreateUserView());
         exitButton.setOnAction(e -> Platform.exit());
@@ -42,13 +44,9 @@ public class LogInView {
                     Button loginButton = new Button(user.getName());
                     loginButton.setMaxWidth(Double.MAX_VALUE);
                     loginButton.setOnAction(e -> {
-                        try {
-                            viewManager.showHomeView(user);
-                        } catch (InvaildNameException | InvaildDescriptionException ex) {
-                            showError("Fehler beim Laden", ex.getMessage());
-                        }
-                    });
+                    viewManager.showHomeView(user);
                     setGraphic(loginButton);
+                    });
                 }
             }
         });
@@ -57,11 +55,11 @@ public class LogInView {
         return new Scene(root, 600, 300);
     }
 
-    private void showError(String header, String msg) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Fehler");
-        alert.setHeaderText(header);
-        alert.setContentText(msg);
-        alert.showAndWait();
-    }
+	private void showError(String header, String msg) {
+		Alert alert = new Alert(Alert.AlertType.ERROR);
+		alert.setTitle("Fehler");
+		alert.setHeaderText(header);
+		alert.setContentText(msg);
+		alert.showAndWait();
+	}
 }

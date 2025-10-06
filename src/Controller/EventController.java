@@ -39,6 +39,10 @@ public class EventController {
         events.clear();
         user.clearEvents();
     }
+    
+    public void deleteEvent(Event event) {
+    	events.remove(event);
+    }
 
     /**
      * Gibt den aktuell angemeldeten Benutzer zurück.

@@ -1,0 +1,58 @@
+package View;
+
+import Controller.EventController;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
+import Model.Event;
+
+import java.time.LocalDate;
+
+/**
+ * View zum Bearbeiten eines Events.
+ */
+public class EditEventView {
+
+	private final ViewManager viewManager;
+	private final EventController eventController;
+	private final Event event;
+
+	public EditEventView(ViewManager viewManager, EventController eventController, Event event) {
+		this.viewManager = viewManager;
+		this.eventController = eventController;
+		this.event = event;
+	}
+
+	public Scene createScene() {
+		Label title = new Label("Edit Event");
+
+		TextField nameField = new TextField(event.getName());
+		DatePicker startDatePicker = new DatePicker(event.getStartDate());
+		DatePicker endDatePicker = new DatePicker(event.getEndDate());
+		TextArea descriptionArea = new TextArea(event.getDescription());
+
+		Button saveButton = new Button("Save Changes");
+		Button cancelButton = new Button("Cancel");
+
+		saveButton.setOnAction(e -> {
+
+			event.setName(nameField.getText());
+			event.setStartDate(startDatePicker.getValue());
+			event.setEndDate(endDatePicker.getValue());
+			event.setDescription(descriptionArea.getText());
+			viewManager.showShowView();
+		});
+
+		cancelButton.setOnAction(e -> viewManager.showShowView());
+
+		VBox root = new VBox(10, title, nameField, startDatePicker, endDatePicker, descriptionArea, saveButton,
+				cancelButton);
+		return new Scene(root, 600, 400);
+	}
+
+	private void showError(String msg) {
+		Alert alert = new Alert(Alert.AlertType.ERROR);
+		alert.setContentText(msg);
+		alert.showAndWait();
+	}
+}
