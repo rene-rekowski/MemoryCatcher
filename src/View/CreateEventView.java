@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 /**
  * Die AddEventView ermöglicht es dem Benutzer, ein neues Event anzulegen.
  */
-public class AddEventView {
+public class CreateEventView {
 	
 	private final ViewManager viewManager;
 	private final EventController eventController;
@@ -24,7 +24,7 @@ public class AddEventView {
 	 * @param eventController Controller zur Verwaltung der Events
 	 * @param homeView        Referenz auf die HomeView (für Navigation zurück)
 	 */
-	public AddEventView(ViewManager viewManager,EventController eventController) {
+	public CreateEventView(ViewManager viewManager,EventController eventController) {
 		this.eventController = eventController;
 		this.viewManager = viewManager;
 	}
@@ -78,7 +78,7 @@ public class AddEventView {
 		backButton.setOnAction(e -> viewManager.showHomeView(eventController.getUser()));
 
 		// Layout
-		VBox root = new VBox(10, titleLabel, nameField, descriptionArea, saveButton, backButton);
+		VBox root = new VBox(10, titleLabel, nameField,startPicker, descriptionArea, saveButton, backButton);
 		root.setPadding(new Insets(20));
 
 		return new Scene(root, 600, 400);

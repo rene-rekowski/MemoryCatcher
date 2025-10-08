@@ -47,8 +47,8 @@ public class ViewManager {
     }
 
     public void showAddEventView() {
-        AddEventView addEventView = new AddEventView(this, eventController);
-        stage.setScene(addEventView.createScene());
+        CreateEventView createEventView = new CreateEventView(this, eventController);
+        stage.setScene(createEventView.createScene());
     }
 
     public void showShowView() {

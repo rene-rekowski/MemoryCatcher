@@ -22,7 +22,7 @@ public class Event {
 		if (name.length() > 30) {
 			throw new IllegalArgumentException("name must shorter than 30 charaters");
 		}
-		if (description != null) {
+		if (description == null) {
 			throw new IllegalArgumentException("description must not be null");
 		}
 		if (description.length() >= 500) {
