@@ -2,6 +2,7 @@ package View;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import Database.DatabaseManager;
 import View.ViewManager;
 
 /**
@@ -11,6 +12,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+    	DatabaseManager.initialize();
+    	
         primaryStage.setTitle("MemoryCatcher");
         ViewManager viewManager = new ViewManager(primaryStage);
         viewManager.showLoginView();

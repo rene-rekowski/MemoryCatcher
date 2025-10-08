@@ -52,7 +52,6 @@ public class CreateUserView {
 
             // Benutzer anlegen und speichern
             userController.addUser(name, birthday);
-            userController.save();
 
             // Zurück zur Login-Ansicht (aktualisiert die Liste dort)
             viewManager.showLoginView();
