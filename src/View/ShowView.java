@@ -24,7 +24,7 @@ public class ShowView {
 	public Scene createScene() {
 		Label title = new Label("All Events");
 
-		ListView<Event> eventList = new ListView<>(FXCollections.observableArrayList(eventController.getEvents()));
+		ListView<Event> eventList = new ListView<>(eventController.getEvents());
 		eventList.setCellFactory(list -> new ListCell<>() {
 			@Override
 			protected void updateItem(Event event, boolean empty) {

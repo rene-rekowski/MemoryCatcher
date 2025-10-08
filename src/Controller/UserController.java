@@ -24,6 +24,7 @@ public class UserController {
 	
 	public void addUser(String name, LocalDate birthday) {
 		users.add(new User(name, birthday));
+		save();
 	}
 		
 	public ObservableList<User> getUsers(){
