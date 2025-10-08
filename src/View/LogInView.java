@@ -29,7 +29,7 @@ public class LogInView {
         Label title = new Label("MemoryCatcher");
         Button createUserButton = new Button("Create User");
         Button exitButton = new Button("Exit");
-        ListView<User> userListView = new ListView<>(FXCollections.observableArrayList(userController.getUsers()));
+        ListView<User> userListView = new ListView<>(userController.getUsers());
 
         createUserButton.setOnAction(e -> viewManager.showCreateUserView());
         exitButton.setOnAction(e -> Platform.exit());
@@ -44,9 +44,9 @@ public class LogInView {
                     Button loginButton = new Button(user.getName());
                     loginButton.setMaxWidth(Double.MAX_VALUE);
                     loginButton.setOnAction(e -> {
-                    viewManager.showHomeView(user);
-                    setGraphic(loginButton);
+	                    viewManager.showHomeView(user);
                     });
+                    setGraphic(loginButton);
                 }
             }
         });

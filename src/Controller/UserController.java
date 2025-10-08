@@ -11,20 +11,22 @@ import java.util.List;
 
 import Model.Event;
 import Model.User;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class UserController {
-	private final List<User> users;
+	private final ObservableList<User> users;
 	private static final String FILE_PATH = "user.csv";
 	
 	public UserController() {
-		this.users = new ArrayList<>();
+		this.users = FXCollections.observableArrayList();
 	}
 	
 	public void addUser(String name, LocalDate birthday) {
 		users.add(new User(name, birthday));
 	}
 		
-	public List<User> getUsers(){
+	public ObservableList<User> getUsers(){
 		return users;
 	}
 	
