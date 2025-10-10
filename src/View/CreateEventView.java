@@ -38,7 +38,6 @@ public class CreateEventView {
 	public Scene createScene() {
 		Label titleLabel = new Label("Add New Event");
 
-		// Eingabefelder
 		TextField nameField = new TextField();
 		nameField.setPromptText("Event name");
 		
@@ -48,11 +47,9 @@ public class CreateEventView {
 		descriptionArea.setPromptText("Event description");
 		descriptionArea.setWrapText(true);
 
-		// Buttons
 		Button saveButton = new Button("Save Event");
 		Button backButton = new Button("Back");
 
-		// Button-Aktionen
 		saveButton.setOnAction(e -> {
 			String name = nameField.getText().trim();
 			String description = descriptionArea.getText().trim();
