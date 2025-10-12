@@ -12,10 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Database.DatabaseManager;
-import Model.Event;
-import Model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import model.Event;
+import model.User;
 
 public class UserController {
 	private final ObservableList<User> users;

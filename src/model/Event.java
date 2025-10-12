@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -35,6 +35,9 @@ public class Event {
 
 	public Event(String name, String description, LocalDate startDate, List<Person> person) {
 		this(name, description, startDate, null, persons);
+	}
+	public Event(String name, String description, LocalDate startDate) {
+		this(name, description, startDate, null, null);
 	}
 
 	/* getter and setter */

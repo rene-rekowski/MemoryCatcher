@@ -1,11 +1,11 @@
-package View;
+package view;
 
 import Controller.EventController;
 import Controller.UserController;
-import Model.Event;
-import Model.User;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.Event;
+import model.User;
 
 /**
  * Coordinate the between the views and handle the logic

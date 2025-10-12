@@ -9,12 +9,12 @@ module MemoryCatcher {
     requires javafx.fxml;
 	requires java.sql;
 
-    opens View to javafx.graphics;  
-    opens Model to javafx.base;
+    opens view to javafx.graphics;  
+    opens model to javafx.base;
     
     opens Database;
 
-    exports View;
-    exports Model;
+    exports view;
+    exports model;
     exports Controller;
 }

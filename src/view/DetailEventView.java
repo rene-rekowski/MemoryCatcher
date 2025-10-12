@@ -1,10 +1,10 @@
-package View;
+package view;
 
 import Controller.EventController;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
-import Model.Event;
+import model.Event;
 
 /**
  * View zur Anzeige der Details eines Events.

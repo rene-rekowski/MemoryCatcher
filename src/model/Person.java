@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 /**
  * represent a person that the User know

@@ -1,4 +1,4 @@
-package View;
+package view;
 
 import Controller.EventController;
 import javafx.collections.FXCollections;
@@ -6,7 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
-import Model.Event;
+import model.Event;
 
 /**
  * View zum Anzeigen aller Events.

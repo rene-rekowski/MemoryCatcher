@@ -1,4 +1,4 @@
-package View;
+package view;
 
 import Controller.UserController;
 import javafx.application.Platform;
@@ -10,7 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
-import Model.User;
+import model.User;
 
 /**
  * Startbildschirm: zeigt alle User an und erlaubt das Login.
