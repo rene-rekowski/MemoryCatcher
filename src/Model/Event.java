@@ -1,6 +1,8 @@
 package Model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents an Event of an user
@@ -14,33 +16,34 @@ public class Event {
 	private LocalDate endDate;
 	private String description;
 	// TODO: Gefühle und Personen wären gut
-
-	public Event(String name, String description, LocalDate startDate) {
-		if (name == null || name.isBlank()) {
-			throw new IllegalArgumentException("name must not be null or empty");
-		}
-		if (name.length() > 30) {
-			throw new IllegalArgumentException("name must shorter than 30 charaters");
-		}
-		if (description == null) {
-			throw new IllegalArgumentException("description must not be null");
-		}
-		if (description.length() >= 500) {
-			throw new IllegalArgumentException("description must shorter than 500 charater");
-		}
+	private static List<Person> persons;
+	
+	/* Constucktor*/
+	public Event(String name, String description, LocalDate startDate, LocalDate endDate, List<Person> persons) {
+		validateeName(name);
+		validateDescription(description);
 
 		this.name = name;
 		this.description = description;
 		this.startDate = startDate;
+		if (persons == null) {
+			this.persons = persons;
+		} else {
+			this.persons = new ArrayList<Person>();
+		}
 	}
 
-	// TODO: überladen konstruktor für endDate
+	public Event(String name, String description, LocalDate startDate, List<Person> person) {
+		this(name, description, startDate, null, persons);
+	}
 
+	/* getter and setter */
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(String name) {
+		validateeName(name);
 		this.name = name;
 	}
 
@@ -53,7 +56,7 @@ public class Event {
 	}
 
 	public LocalDate getEndDate() {
-		return endDate;
+		return this.endDate;
 	}
 
 	public void setEndDate(LocalDate endDate) {
@@ -61,10 +64,39 @@ public class Event {
 	}
 
 	public String getDescription() {
-		return description;
+		return this.description;
 	}
 
 	public void setDescription(String description) {
+		validateDescription(description);
 		this.description = description;
 	}
+
+	public List<Person> getPersons() {
+		return new ArrayList<Person>(persons);
+	}
+
+	public void addPerson(Person person) {
+		this.persons.add(person);
+	}
+
+	/* validate-methods */
+	private void validateeName(String name) {
+		if (name == null || name.isBlank()) {
+			throw new IllegalArgumentException("name must not be null or empty");
+		}
+		if (name.length() > 30) {
+			throw new IllegalArgumentException("name must shorter than 30 charaters");
+		}
+	}
+
+	private void validateDescription(String description) {
+		if (description == null) {
+			throw new IllegalArgumentException("description must not be null");
+		}
+		if (description.length() >= 500) {
+			throw new IllegalArgumentException("description must shorter than 500 charater");
+		}
+	}
+
 }
