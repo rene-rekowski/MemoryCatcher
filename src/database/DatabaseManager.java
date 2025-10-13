@@ -1,9 +1,15 @@
-package Database;
+package database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * 	
+ * 
+ * @author rene-rekowski
+ * @version 1.0
+ */
 public class DatabaseManager {
 
 	private static final String DB_URL = "jdbc:sqlite:memorycatcher.db";

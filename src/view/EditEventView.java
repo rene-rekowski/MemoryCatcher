@@ -11,6 +11,9 @@ import controller.EventController;
 
 /**
  * View zum Bearbeiten eines Events.
+ * 
+ * @author rene-rekowski
+ * @version 1.0
  */
 public class EditEventView {
 

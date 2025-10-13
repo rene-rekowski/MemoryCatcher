@@ -1,12 +1,15 @@
 package view;
 
+import database.DatabaseManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import view.ViewManager;
-import Database.DatabaseManager;
 
 /**
  * Einstiegspunkt der Anwendung.
+ * 
+ * @author rene-rekowski
+ * @version 1.0
  */
 public class App extends Application {
 

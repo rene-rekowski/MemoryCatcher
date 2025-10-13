@@ -2,6 +2,9 @@ package model;
 
 /**
  * represent a person that the User know
+ * 
+ * @author rene-rekowski
+ * @version 1.0
  */
 public class Person {
 	private String name;

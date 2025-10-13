@@ -10,6 +10,9 @@ import model.Event;
 
 /**
  * View zum Anzeigen aller Events.
+ * 
+ * @author rene-rekowski
+ * @version 1.0
  */
 public class ShowView {
 

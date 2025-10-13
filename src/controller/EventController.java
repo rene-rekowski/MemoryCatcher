@@ -1,23 +1,23 @@
 package controller;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
-import Database.DatabaseManager;
+import database.DatabaseManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Event;
 import model.Person;
 import model.User;
 
+/**
+ * Controlled the events
+ * 
+ * @author rene-rekowski
+ * @version 1.0
+ */
 public class EventController {
 	private final User user;
 	private final ObservableList<Event> events;

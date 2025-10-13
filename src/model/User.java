@@ -6,6 +6,9 @@ import java.util.List;
 
 /**
  * reprensted a user that rember events and persons in that life
+ * 
+ * @author rene-rekowski
+ * @version 1.0
  */
 public class User {
 	private final String name;

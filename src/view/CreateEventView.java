@@ -14,8 +14,11 @@ import model.Person;
 
 /**
  * Die AddEventView ermöglicht es dem Benutzer, ein neues Event anzulegen.
+ * 
+ * @author rene-rekowski
+ * @version 1.0
  */
-public class CreateEventView {
+public class CreateEventView{
 	
 	private final ViewManager viewManager;
 	private final EventController eventController;

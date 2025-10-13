@@ -14,6 +14,9 @@ import model.User;
 
 /**
  * Startbildschirm: zeigt alle User an und erlaubt das Login.
+ * 
+ * @author rene-rekowski
+ * @version 1.0
  */
 public class LogInView {
 
@@ -26,34 +29,34 @@ public class LogInView {
 	}
 
 	public Scene createScene() {
-        Label title = new Label("MemoryCatcher");
-        Button createUserButton = new Button("Create User");
-        Button exitButton = new Button("Exit");
-        ListView<User> userListView = new ListView<>(userController.getUsers());
+		Label title = new Label("MemoryCatcher");
+		Button createUserButton = new Button("Create User");
+		Button exitButton = new Button("Exit");
+		ListView<User> userListView = new ListView<>(userController.getUsers());
 
-        createUserButton.setOnAction(e -> viewManager.showCreateUserView());
-        exitButton.setOnAction(e -> Platform.exit());
+		createUserButton.setOnAction(e -> viewManager.showCreateUserView());
+		exitButton.setOnAction(e -> Platform.exit());
 
-        userListView.setCellFactory(listView -> new ListCell<>() {
-            @Override
-            protected void updateItem(User user, boolean empty) {
-                super.updateItem(user, empty);
-                if (empty || user == null) {
-                    setGraphic(null);
-                } else {
-                    Button loginButton = new Button(user.getName());
-                    loginButton.setMaxWidth(Double.MAX_VALUE);
-                    loginButton.setOnAction(e -> {
-	                    viewManager.showHomeView(user);
-                    });
-                    setGraphic(loginButton);
-                }
-            }
-        });
+		userListView.setCellFactory(listView -> new ListCell<>() {
+			@Override
+			protected void updateItem(User user, boolean empty) {
+				super.updateItem(user, empty);
+				if (empty || user == null) {
+					setGraphic(null);
+				} else {
+					Button loginButton = new Button(user.getName());
+					loginButton.setMaxWidth(Double.MAX_VALUE);
+					loginButton.setOnAction(e -> {
+						viewManager.showHomeView(user);
+					});
+					setGraphic(loginButton);
+				}
+			}
+		});
 
-        VBox root = new VBox(10, title, userListView, createUserButton, exitButton);
-        return new Scene(root, 600, 300);
-    }
+		VBox root = new VBox(10, title, userListView, createUserButton, exitButton);
+		return new Scene(root, 600, 300);
+	}
 
 	private void showError(String header, String msg) {
 		Alert alert = new Alert(Alert.AlertType.ERROR);

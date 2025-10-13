@@ -12,7 +12,7 @@ module MemoryCatcher {
     opens view to javafx.graphics;  
     opens model to javafx.base;
     
-    opens Database;
+    opens database;
 
     exports view;
     exports model;

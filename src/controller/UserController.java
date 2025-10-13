@@ -1,22 +1,19 @@
 package controller;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
-import Database.DatabaseManager;
+import database.DatabaseManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.Event;
 import model.User;
 
+/**
+ * controlled the user
+ * 
+ * @author rene-rekowski
+ * @version 1.0
+ */
 public class UserController {
 	private final ObservableList<User> users;
 	private static final String FILE_PATH = "user.csv";
