@@ -15,77 +15,77 @@ import model.User;
  */
 public class ViewManager {
 
-    private final Stage stage;
-    private final UserController userController;
-    private EventController eventController;
+	private final Stage stage;
+	private final UserController userController;
+	private EventController eventController;
 
-    private Scene loginScene;
-    private Scene homeScene;
+	private Scene loginScene;
+	private Scene homeScene;
 
-    public ViewManager(Stage stage) {
-        this.stage = stage;
-        this.userController = new UserController();
-        userController.load();
-    }
+	public ViewManager(Stage stage) {
+		this.stage = stage;
+		this.userController = new UserController();
+		userController.load();
+	}
 
-    public void showLoginView() {
-        LogInView logInView = new LogInView(this, userController);
-        loginScene = logInView.createScene();
-        stage.setScene(loginScene);
-    }
+	public void showLoginView() {
+		LogInView logInView = new LogInView(this, userController);
+		loginScene = logInView.createScene();
+		stage.setScene(loginScene);
+	}
 
-    public void showCreateUserView() {
-        CreateUserView createUserView = new CreateUserView(this, userController);
-        stage.setScene(createUserView.createScene());
-    }
+	public void showCreateUserView() {
+		CreateUserView createUserView = new CreateUserView(this, userController);
+		stage.setScene(createUserView.createScene());
+	}
 
-    public void showHomeView(User user) {
-        eventController = new EventController(user);
-        HomeView homeView = new HomeView(this, eventController, user);
-        homeScene = homeView.createScene();
-        stage.setScene(homeScene);
-    }
+	public void showHomeView(User user) {
+		eventController = new EventController(user);
+		HomeView homeView = new HomeView(this, eventController, user);
+		homeScene = homeView.createScene();
+		stage.setScene(homeScene);
+	}
 
-    public void showAddEventView() {
-        CreateEventView createEventView = new CreateEventView(this, eventController);
-        stage.setScene(createEventView.createScene());
-    }
+	public void showAddEventView() {
+		CreateEventView createEventView = new CreateEventView(this, eventController);
+		stage.setScene(createEventView.createScene());
+	}
 
-    public void showShowView() {
-        ShowView showView = new ShowView(this, eventController);
-        stage.setScene(showView.createScene());
-    }
+	public void showShowView() {
+		ShowView showView = new ShowView(this, eventController);
+		stage.setScene(showView.createScene());
+	}
 
-    public void showUserDetailView(User user) {
-        DetailUserView userDetailView = new DetailUserView(this, user);
-        stage.setScene(userDetailView.createScene());
-    }
-    
-    public void showDetailEventView(Event event) {
-    	DetailEventView detailEventView = new DetailEventView(this, eventController, event);
-    	stage.setScene(detailEventView.createScene());
-    }
-    
-    public void showEditEventView(Event event) {
-    	EditEventView editEventView = new EditEventView(this, eventController, event);
-    	stage.setScene(editEventView.createScene());
-    }
-    
-    public void showCreatePerson() {
-    	CreatePersonView createPersonView = new CreatePersonView(this, eventController);
-    	stage.setScene(createPersonView.createSccene());
-    }
-    
-    public void showTimelineView() {
-    	TimelineView timelineView = new TimelineView(this, eventController);
-    	stage.setScene(timelineView.createTimelineScene());
-    }
+	public void showUserDetailView(User user) {
+		DetailUserView userDetailView = new DetailUserView(this, user);
+		stage.setScene(userDetailView.createScene());
+	}
 
-    public void exitToLogin() {
-        stage.setScene(loginScene);
-    }
+	public void showDetailEventView(Event event) {
+		DetailEventView detailEventView = new DetailEventView(this, eventController, event);
+		stage.setScene(detailEventView.createScene());
+	}
 
-    public Stage getStage() {
-        return stage;
-    }
+	public void showEditEventView(Event event) {
+		EditEventView editEventView = new EditEventView(this, eventController, event);
+		stage.setScene(editEventView.createScene());
+	}
+
+	public void showCreatePerson() {
+		CreatePersonView createPersonView = new CreatePersonView(this, eventController);
+		stage.setScene(createPersonView.createSccene());
+	}
+
+	public void showTimelineView() {
+		TimelineView timelineView = new TimelineView(eventController.getEvents());
+		stage.setScene(new Scene(timelineView, 800, 400));
+	}
+
+	public void exitToLogin() {
+		stage.setScene(loginScene);
+	}
+
+	public Stage getStage() {
+		return stage;
+	}
 }

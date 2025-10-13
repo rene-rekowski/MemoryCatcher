@@ -1,116 +1,107 @@
 package view;
 
-import javafx.geometry.Insets;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import model.Event;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
-import controller.EventController;
+public class TimelineView extends Pane {
 
-public class TimelineView {
+    public TimelineView(List<Event> events) {
+        int width = 800;
+        int height = 400;
+        int offset = 50;
 
-    private final EventController eventController;
-    private final ViewManager viewManager; // hinzugefügt
+        this.setStyle("-fx-background-color: white;");
+        this.setPrefSize(width, height);
 
-    public TimelineView( ViewManager viewManager, EventController eventController) {
-        this.eventController = eventController;
-        this.viewManager = viewManager;
-    }
+        if (events.isEmpty()) return;
 
-    public Scene createTimelineScene() {
-        VBox root = new VBox(10);
-        root.setPadding(new Insets(20));
+        // === Zeitspanne bestimmen ===
+        LocalDate min = events.stream().map(Event::getStartDate)
+                .min(LocalDate::compareTo).orElse(LocalDate.now());
+        LocalDate max = events.stream().map(Event::getEndDate)
+                .max(LocalDate::compareTo).orElse(LocalDate.now());
+        long totalDays = ChronoUnit.DAYS.between(min, max);
+        if (totalDays == 0) totalDays = 1;
 
-        Label title = new Label("Event Timeline");
-        title.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
+        double availableWidth = width - 2.0 * offset;
+        double barHeight = 20.0;
+        double verticalSpacing = 35.0;
 
-        // Timeline-Container
-        HBox timelineBox = new HBox();
-        timelineBox.setSpacing(10);
-        timelineBox.setPadding(new Insets(20));
-        timelineBox.setStyle("-fx-background-color: #f0f0f0;");
+        // === Achse zeichnen ===
+        Line axis = new Line(offset, height - offset, width - offset, height - offset);
+        axis.setStroke(Color.DARKGRAY);
+        axis.setStrokeWidth(3);
+        this.getChildren().add(axis);
 
-        // Berechne min/max Datum der Events
-        List<Event> events = eventController.getEvents();
-        if (events.isEmpty()) {
-            timelineBox.getChildren().add(new Label("Keine Events vorhanden."));
-        } else {
-            LocalDate minDate = events.stream()
-                    .map(Event::getStartDate)
-                    .min(LocalDate::compareTo)
-                    .orElse(LocalDate.now());
+        // === Events nach Startdatum sortieren ===
+        List<Event> sorted = new ArrayList<>(events);
+        sorted.sort(Comparator.comparing(Event::getStartDate));
 
-            LocalDate maxDate = events.stream()
-                    .map(e -> e.getEndDate() != null ? e.getEndDate() : e.getStartDate())
-                    .max(LocalDate::compareTo)
-                    .orElse(LocalDate.now());
+        List<LocalDate> rowEndDates = new ArrayList<>();
 
-            long totalMonths = ChronoUnit.MONTHS.between(
-                    minDate.withDayOfMonth(1),
-                    maxDate.withDayOfMonth(1)
-            ) + 1;
+        for (Event event : sorted) {
+            LocalDate start = event.getStartDate();
+            LocalDate end = event.getEndDate() != null ? event.getEndDate() : start;
 
-            double scale = 100; // 1 Monat = 100px
+            long startOffset = ChronoUnit.DAYS.between(min, start);
+            long endOffset = ChronoUnit.DAYS.between(min, end);
 
-            // Zeitskala erstellen (Monate)
-            HBox scaleBox = new HBox();
-            scaleBox.setSpacing(0);
-            for (int i = 0; i < totalMonths; i++) {
-                LocalDate monthDate = minDate.plusMonths(i);
-                Label monthLabel = new Label(monthDate.getMonth().name() + " " + monthDate.getYear());
-                monthLabel.setPrefWidth(scale);
-                monthLabel.setStyle("-fx-border-color: gray; -fx-border-width: 0 1 0 0; -fx-alignment: center;");
-                scaleBox.getChildren().add(monthLabel);
+            double startX = offset + (startOffset / (double) totalDays) * availableWidth;
+            double endX = offset + (endOffset / (double) totalDays) * availableWidth;
+            double barWidth = Math.max(5, endX - startX);
+
+            // freie Zeile suchen
+            int row = 0;
+            for (; row < rowEndDates.size(); row++) {
+                if (rowEndDates.get(row).isBefore(start)) {
+                    rowEndDates.set(row, end);
+                    break;
+                }
             }
+            if (row == rowEndDates.size()) rowEndDates.add(end);
 
-            VBox timelineContainer = new VBox(5, scaleBox, timelineBox);
+            double y = height - offset - (row + 1) * verticalSpacing;
 
-            // Events positionieren
-            for (Event e : events) {
-                LocalDate start = e.getStartDate();
-                LocalDate end = e.getEndDate() != null ? e.getEndDate() : start;
+            Rectangle bar = new Rectangle(startX, y, barWidth, barHeight);
+            bar.setArcWidth(8);
+            bar.setArcHeight(8);
+            bar.setFill(Color.DODGERBLUE);
+            bar.setStroke(Color.DARKBLUE);
+            bar.setStrokeWidth(1.2);
+            this.getChildren().add(bar);
 
-                long monthsFromStart = ChronoUnit.MONTHS.between(minDate.withDayOfMonth(1), start.withDayOfMonth(1));
-                long eventDuration = ChronoUnit.MONTHS.between(start.withDayOfMonth(1), end.withDayOfMonth(1)) + 1;
-
-                VBox eventBox = new VBox(5);
-                eventBox.setPadding(new Insets(5));
-                eventBox.setStyle("-fx-background-color: lightblue; -fx-border-color: black;");
-                eventBox.setPrefWidth(eventDuration * scale);
-
-                Label nameLabel = new Label(e.getName());
-                Label dateLabel = new Label(start + " - " + end);
-                eventBox.getChildren().addAll(nameLabel, dateLabel);
-
-                // Abstand vor dem Event
-                Region spacer = new Region();
-                spacer.setPrefWidth(monthsFromStart * scale);
-                timelineBox.getChildren().addAll(spacer, eventBox);
-            }
-
-            // ScrollPane für horizontales Scrollen
-            ScrollPane scrollPane = new ScrollPane(timelineContainer);
-            scrollPane.setFitToHeight(true);
-            scrollPane.setFitToWidth(false);
-            scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-            scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-            scrollPane.setPannable(true);
-
-            root.getChildren().addAll(title, scrollPane);
+            Label nameLabel = new Label(event.getName());
+            nameLabel.setLayoutX(startX + 5);
+            nameLabel.setLayoutY(y - 18);
+            nameLabel.setStyle("-fx-font-size: 11px; -fx-font-weight: bold;");
+            this.getChildren().add(nameLabel);
         }
 
-        // Back-Button
-        Button backButton = new Button("Back");
-        backButton.setOnAction(e -> viewManager.showHomeView(eventController.getUser()));
-        root.getChildren().add(backButton);
+        // Jahresmarkierungen
+        int years = max.getYear() - min.getYear();
+        for (int i = 0; i <= years; i++) {
+            int year = min.getYear() + i;
+            double x = offset + (i / (double) years) * availableWidth;
 
-        return new Scene(root, 900, 400);
+            Line tick = new Line(x, height - offset - 5, x, height - offset + 5);
+            tick.setStroke(Color.GRAY);
+            this.getChildren().add(tick);
+
+            Label label = new Label(String.valueOf(year));
+            label.setLayoutX(x - 15);
+            label.setLayoutY(height - offset + 10);
+            label.setStyle("-fx-font-size: 11px;");
+            this.getChildren().add(label);
+        }
     }
 }
