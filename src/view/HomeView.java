@@ -28,18 +28,20 @@ public class HomeView {
 
         Button addEventButton = new Button("Add Event");
         Button showEventsButton = new Button("Show Events");
+        Button createPerson = new Button("add Person");
         Button detailButton = new Button("User Details");
         Button deleteUserButton = new Button("Delete User");
         Button logoutButton = new Button("Logout");
 
         addEventButton.setOnAction(e -> viewManager.showAddEventView());
         showEventsButton.setOnAction(e -> viewManager.showShowView());
+        createPerson.setOnAction(e-> viewManager.showCreatePerson());
         detailButton.setOnAction(e -> viewManager.showUserDetailView(currentUser));
         logoutButton.setOnAction(e -> viewManager.exitToLogin());
 
-        VBox root = new VBox(15, title, addEventButton, showEventsButton,
+        VBox root = new VBox(15, title, addEventButton, showEventsButton,createPerson,
                 detailButton, deleteUserButton, logoutButton);
 
-        return new Scene(root, 600, 300);
+        return new Scene(root, 600, 400);
     }
 }

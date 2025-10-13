@@ -70,6 +70,11 @@ public class ViewManager {
     	EditEventView editEventView = new EditEventView(this, eventController, event);
     	stage.setScene(editEventView.createScene());
     }
+    
+    public void showCreatePerson() {
+    	CreatePersonView createPersonView = new CreatePersonView(this, eventController);
+    	stage.setScene(createPersonView.createSccene());
+    }
 
     public void exitToLogin() {
         stage.setScene(loginScene);

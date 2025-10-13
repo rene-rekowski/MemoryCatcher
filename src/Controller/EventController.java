@@ -15,6 +15,7 @@ import Database.DatabaseManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Event;
+import model.Person;
 import model.User;
 
 public class EventController {
@@ -50,6 +51,11 @@ public class EventController {
 			System.err.println("Fehler beim Hinzufügen des Events: " + e.getMessage());
 		}
 	}
+	
+	public void addPerson(String name, String description) {
+		Person newPerson = new Person(name, description);
+		user.getPersons().add(newPerson);
+	}
 
 	private int getUserId() {
 		String sql = "SELECT id FROM users WHERE name = ?";
@@ -67,12 +73,7 @@ public class EventController {
 		return -1; // nicht gefunden
 	}
 
-	/**
-	 * Gibt alle Events des Benutzers zurück.
-	 */
-	public ObservableList<Event> getEvents() {
-		return events;
-	}
+
 
 	/**
 	 * delete one spezifik event
@@ -143,6 +144,13 @@ public class EventController {
 	 */
 	public User getUser() {
 		return user;
+	}
+	
+	/**
+	 * Gibt alle Events des Benutzers zurück.
+	 */
+	public ObservableList<Event> getEvents() {
+		return events;
 	}
 
 }

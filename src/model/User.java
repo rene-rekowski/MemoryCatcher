@@ -59,6 +59,9 @@ public class User {
 	public void clearEvents() {
 		events.clear();
 	}
+	public List<Person> getPersons() {
+		return this.persons;
+	}
 
 	/* validate */
 	public void validateName(String name) {
