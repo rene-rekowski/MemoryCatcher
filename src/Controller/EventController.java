@@ -25,37 +25,112 @@ public class EventController {
 	public EventController(User user) {
 		this.user = user;
 		this.events = FXCollections.observableArrayList(user.getEvents());
+		loadPersons();
 		load();
 	}
 
-	/**
-	 * Fügt ein neues Event hinzu.
-	 */
-	public void addEvent(String name, String description, LocalDate startDate) {
-		String sql = "INSERT INTO events (user_id, name, description, start_date) VALUES (?, ?, ?, ?)";
+	public void addEvent(String name, String description, LocalDate startDate, LocalDate endDate,  List<Person> persons) {
+		String sql = "INSERT INTO events (user_id, name, description, start_date, end_date) VALUES (?, ?, ?, ?, ?)";
 
-		try (Connection conn = DatabaseManager.getConnection(); var pstmt = conn.prepareStatement(sql)) {
+	    try (Connection conn = DatabaseManager.getConnection()) {
+	        conn.setAutoCommit(false);
 
-			int userId = getUserId(); // Methode um die ID des Users aus der DB zu holen
-			pstmt.setInt(1, userId);
-			pstmt.setString(2, name);
-			pstmt.setString(3, description);
-			pstmt.setString(4, startDate.toString());
-			pstmt.executeUpdate();
+	        // 1. Event speichern
+	        try (var pstmt = conn.prepareStatement(sql, java.sql.Statement.RETURN_GENERATED_KEYS)) {
+	            pstmt.setInt(1, getUserId());
+	            pstmt.setString(2, name);
+	            pstmt.setString(3, description);
+	            pstmt.setString(4, startDate != null ? startDate.toString() : null);
+	            pstmt.setString(5, endDate != null ? endDate.toString() : null);
+	            pstmt.executeUpdate();
 
-			Event e = new Event(name, description, startDate);
-			events.add(e);
-			user.addEvent(e);
+	            // Event-ID holen
+	            var rs = pstmt.getGeneratedKeys();
+	            if (rs.next()) {
+	                int eventId = rs.getInt(1);
 
-		} catch (SQLException e) {
-			System.err.println("Fehler beim Hinzufügen des Events: " + e.getMessage());
-		}
+	                // 2. Personen-IDs heraussuchen & Verknüpfung speichern
+	                String insertLinkSQL = "INSERT INTO event_persons (event_id, person_id) VALUES (?, ?)";
+	                try (var linkStmt = conn.prepareStatement(insertLinkSQL)) {
+	                    for (Person p : persons) {
+	                        int personId = getPersonIdByName(conn, p.getName());
+	                        if (personId != -1) {
+	                            linkStmt.setInt(1, eventId);
+	                            linkStmt.setInt(2, personId);
+	                            linkStmt.addBatch();
+	                        }
+	                    }
+	                    linkStmt.executeBatch();
+	                }
+	            }
+	        }
+
+	        conn.commit();
+
+	        // Event-Objekt auch im Speicher ergänzen
+	        Event event = new Event(name, description, startDate, endDate, persons);
+	        events.add(event);
+	        user.addEvent(event);
+
+	    } catch (SQLException e) {
+	        System.err.println("Fehler beim Hinzufügen des Events: " + e.getMessage());
+	    }
 	}
 	
-	public void addPerson(String name, String description) {
-		Person newPerson = new Person(name, description);
-		user.getPersons().add(newPerson);
+	private int getPersonIdByName(Connection conn, String name) throws SQLException {
+	    String sql = "SELECT id FROM persons WHERE name = ? AND user_id = ?";
+	    try (var pstmt = conn.prepareStatement(sql)) {
+	        pstmt.setString(1, name);
+	        pstmt.setInt(2, getUserId());
+	        var rs = pstmt.executeQuery();
+	        if (rs.next()) return rs.getInt("id");
+	    }
+	    return -1;
 	}
+	
+	/**
+	 * Fügt eine Person in die Datenbank ein und speichert sie im User.
+	 */
+	public void addPerson(String name, String description) {
+	    String sql = "INSERT INTO persons (user_id, name, description) VALUES (?, ?, ?)";
+
+	    try (Connection conn = DatabaseManager.getConnection(); var pstmt = conn.prepareStatement(sql)) {
+	        pstmt.setInt(1, getUserId());
+	        pstmt.setString(2, name);
+	        pstmt.setString(3, description);
+	        pstmt.executeUpdate();
+
+	        Person newPerson = new Person(name, description);
+	        user.getPersons().add(newPerson);
+
+	    } catch (SQLException e) {
+	        System.err.println("Fehler beim Hinzufügen der Person: " + e.getMessage());
+	    }
+	}
+	
+	/**
+	 * Lädt alle Personen des Users aus der Datenbank.
+	 */
+	public void loadPersons() {
+	    user.getPersons().clear();
+
+	    String sql = "SELECT name, description FROM persons WHERE user_id = ?";
+
+	    try (Connection conn = DatabaseManager.getConnection(); var pstmt = conn.prepareStatement(sql)) {
+	        pstmt.setInt(1, getUserId());
+	        var rs = pstmt.executeQuery();
+
+	        while (rs.next()) {
+	            String name = rs.getString("name");
+	            String description = rs.getString("description");
+	            user.getPersons().add(new Person(name, description));
+	        }
+
+	    } catch (SQLException e) {
+	        System.err.println("Fehler beim Laden der Personen: " + e.getMessage());
+	    }
+	}
+
 
 	private int getUserId() {
 		String sql = "SELECT id FROM users WHERE name = ?";
@@ -115,27 +190,35 @@ public class EventController {
 	 * Lädt alle Events aus der CSV-Datei für diesen User.
 	 */
 	public void load() {
-		events.clear();
-		String sql = "SELECT name, description, start_date FROM events WHERE user_id = ?";
+	    events.clear();
+	    String sql = "SELECT name, description, start_date, end_date FROM events WHERE user_id = ?";
 
-		try (Connection conn = DatabaseManager.getConnection(); var pstmt = conn.prepareStatement(sql)) {
+	    try (Connection conn = DatabaseManager.getConnection(); var pstmt = conn.prepareStatement(sql)) {
+	        pstmt.setInt(1, getUserId());
+	        var rs = pstmt.executeQuery();
 
-			pstmt.setInt(1, getUserId());
-			var rs = pstmt.executeQuery();
+	        while (rs.next()) {
+	            String name = rs.getString("name");
+	            String description = rs.getString("description");
+	            LocalDate startDate = LocalDate.parse(rs.getString("start_date"));
 
-			while (rs.next()) {
-				String name = rs.getString("name");
-				String description = rs.getString("description");
-				LocalDate startDate = LocalDate.parse(rs.getString("start_date"));
-				Event e = new Event(name, description, startDate);
-				events.add(e);
-				user.addEvent(e);
-			}
+	            // end_date korrekt laden
+	            LocalDate endDate = null;
+	            String endStr = rs.getString("end_date");
+	            if (endStr != null) {
+	                endDate = LocalDate.parse(endStr);
+	            }
 
-		} catch (SQLException e) {
-			System.err.println("Fehler beim Laden der Events: " + e.getMessage());
-		}
+	            Event e = new Event(name, description, startDate, endDate, null);
+	            events.add(e);
+	            user.addEvent(e);
+	        }
+
+	    } catch (SQLException e) {
+	        System.err.println("Fehler beim Laden der Events: " + e.getMessage());
+	    }
 	}
+
 
 	/* setter and setter */
 	

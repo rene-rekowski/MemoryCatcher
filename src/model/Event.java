@@ -26,6 +26,7 @@ public class Event {
 		this.name = name;
 		this.description = description;
 		this.startDate = startDate;
+		this.endDate = endDate;
 		if (persons == null) {
 			this.persons = persons;
 		} else {

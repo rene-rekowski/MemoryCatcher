@@ -10,7 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
 /*
- * CreatePersonView cann the user create Person
+ * CreatePersonView can the user create Person
  */
 public class CreatePersonView {
 	
