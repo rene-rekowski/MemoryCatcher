@@ -1,6 +1,6 @@
 package view;
 
-import Controller.UserController;
+import controller.UserController;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.scene.Scene;

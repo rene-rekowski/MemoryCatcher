@@ -16,5 +16,5 @@ module MemoryCatcher {
 
     exports view;
     exports model;
-    exports Controller;
+    exports controller;
 }

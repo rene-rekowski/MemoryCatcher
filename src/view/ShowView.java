@@ -1,6 +1,6 @@
 package view;
 
-import Controller.EventController;
+import controller.EventController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;

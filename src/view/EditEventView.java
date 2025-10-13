@@ -1,12 +1,13 @@
 package view;
 
-import Controller.EventController;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import model.Event;
 
 import java.time.LocalDate;
+
+import controller.EventController;
 
 /**
  * View zum Bearbeiten eines Events.

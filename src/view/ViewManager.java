@@ -1,7 +1,7 @@
 package view;
 
-import Controller.EventController;
-import Controller.UserController;
+import controller.EventController;
+import controller.UserController;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.Event;

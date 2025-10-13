@@ -1,6 +1,5 @@
 package view;
 
-import Controller.EventController;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -12,6 +11,8 @@ import model.Event;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+
+import controller.EventController;
 
 public class TimelineView {
 

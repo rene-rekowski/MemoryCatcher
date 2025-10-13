@@ -1,11 +1,12 @@
 package view;
 
-import Controller.UserController;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
 import java.time.LocalDate;
+
+import controller.UserController;
 
 /**
  * View zum Erstellen eines neuen Benutzers.
