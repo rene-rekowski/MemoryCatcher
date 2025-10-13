@@ -75,6 +75,11 @@ public class ViewManager {
     	CreatePersonView createPersonView = new CreatePersonView(this, eventController);
     	stage.setScene(createPersonView.createSccene());
     }
+    
+    public void showTimelineView() {
+    	TimelineView timelineView = new TimelineView(this, eventController);
+    	stage.setScene(timelineView.createTimelineScene());
+    }
 
     public void exitToLogin() {
         stage.setScene(loginScene);
