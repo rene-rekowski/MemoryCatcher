@@ -77,8 +77,8 @@ public class ViewManager {
 	}
 
 	public void showTimelineView() {
-		TimelineView timelineView = new TimelineView(eventController.getEvents());
-		stage.setScene(new Scene(timelineView, 800, 400));
+		TimelineView timelineView = new TimelineView(this, eventController);
+		stage.setScene(timelineView.createScene());
 	}
 
 	public void exitToLogin() {
