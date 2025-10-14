@@ -6,7 +6,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.Event;
 import model.User;
-
+//TODO: retrun View to the privoudly - maby interface impl.
 /**
  * Coordinate the between the views and handle the logic
  * 

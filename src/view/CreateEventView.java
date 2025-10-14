@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Person;
 
+//TODO: sepation of the Pane
 /**
  * Die AddEventView ermöglicht es dem Benutzer, ein neues Event anzulegen.
  * 
@@ -58,7 +59,7 @@ public class CreateEventView{
 		Button backButton = new Button("Back");
 
 		
-
+		
 		backButton.setOnAction(e -> viewManager.showHomeView(eventController.getUser()));
 		
 		List<Person> selectedPersons = new ArrayList<>();
