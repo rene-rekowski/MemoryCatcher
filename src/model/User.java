@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 /**
  * reprensted a user that rember events and persons in that life
  * 
@@ -14,10 +17,10 @@ public class User {
 	private final String name;
 	private final LocalDate birthday;
 	private final List<Event> events;
-	private final List<Person> persons;
+	private ObservableList<Person> persons ;
 
 	/* Constructor */
-	public User(String name, LocalDate birthday, List<Event> events, List<Person> persons) {
+	public User(String name, LocalDate birthday, List<Event> events, ObservableList<Person> persons) {
 		validateName(name);
 		if (birthday == null) {
 			throw new IllegalArgumentException("Geburtsdatum darf nicht null sein.");
@@ -32,7 +35,7 @@ public class User {
 			this.events = events;
 		}
 		if (persons == null) {
-			this.persons = new ArrayList<>();
+			this.persons = FXCollections.observableArrayList();
 		} else {
 			this.persons = persons;
 		}
@@ -62,7 +65,7 @@ public class User {
 	public void clearEvents() {
 		events.clear();
 	}
-	public List<Person> getPersons() {
+	public ObservableList<Person> getPersons() {
 		return this.persons;
 	}
 
