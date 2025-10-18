@@ -2,7 +2,6 @@ package database.repository;
 
 import database.DatabaseManager;
 import model.Event;
-import model.Person;
 import model.User;
 
 import java.sql.*;

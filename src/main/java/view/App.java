@@ -3,7 +3,6 @@ package view;
 import database.DatabaseManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import view.ViewManager;
 
 /**
  * Einstiegspunkt der Anwendung.
