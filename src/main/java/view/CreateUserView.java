@@ -48,7 +48,7 @@ public class CreateUserView {
 			}
 		});
 
-		cancelButton.setOnAction(e -> viewManager.showLoginView());
+		cancelButton.setOnAction(e -> viewManager.goBack());
 
 		VBox root = new VBox(12, title, nameField, birthdayPicker, createButton, cancelButton);
 		root.setPrefSize(600, 300);

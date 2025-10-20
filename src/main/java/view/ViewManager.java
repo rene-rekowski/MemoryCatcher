@@ -1,12 +1,15 @@
 package view;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 import controller.EventController;
 import controller.UserController;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.Event;
 import model.User;
-//TODO: retrun View to the privoudly - maby interface impl.
 /**
  * Coordinate the between the views and handle the logic
  * 
@@ -18,52 +21,69 @@ public class ViewManager {
 	private final Stage stage;
 	private final UserController userController;
 	private EventController eventController;
-
-	private Scene loginScene;
-	private Scene homeScene;
+	
+	private final Deque<Scene> sceneHistory = new ArrayDeque<>();
+	
+	private static final int SCENE_WIDTH = 800;
+	private static final int SCENE_HEIGHT = 600;
 
 	public ViewManager(Stage stage) {
 		this.stage = stage;
 		this.userController = new UserController();
 		userController.load();
 	}
-
+	
+	public void goBack() {
+	    if (!sceneHistory.isEmpty()) {
+	        Scene previous = sceneHistory.pop();
+	        stage.setScene(previous);
+	    } else {
+	        System.out.println("Keine vorherige Scene vorhanden.");
+	    }
+	}
+	
+	private void setScene(Scene newScene) {
+	    Scene current = stage.getScene();
+	    if (current != null) {
+	        sceneHistory.push(current);
+	    }
+	    stage.setScene(newScene);
+	}
+	
 	public void showLoginView() {
 		LogInView logInView = new LogInView(this, userController);
-		loginScene = logInView.createScene();
-		stage.setScene(loginScene);
+		setScene(logInView.createScene());
 	}
 
 	public void showCreateUserView() {
 		CreateUserView createUserView = new CreateUserView(this, userController);
-		stage.setScene(createUserView.createScene());
+		setScene(createUserView.createScene());
 	}
 
 	public void showHomeView(User user) {
 		eventController = new EventController(user);
 		HomeView homeView = new HomeView(this, eventController, user);
-		homeScene = homeView.createScene();
-		stage.setScene(homeScene);
+		setScene(homeView.createScene());
 	}
 
 	public void showAddEventView() {
 		CreateEventView createEventView = new CreateEventView(this, eventController);
-		stage.setScene(createEventView.createScene());
+		setScene(createEventView.createScene());
 	}
 
 	public void showShowView() {
 		ShowView showView = new ShowView(this, eventController);
-		stage.setScene(showView.createScene());
+		setScene(showView.createScene());
 	}
 
 	public void showUserDetailView(User user) {
 		DetailUserView userDetailView = new DetailUserView(this, user);
-		stage.setScene(userDetailView.createScene());
+		setScene(userDetailView.createScene());
 	}
 
 	public void showDetailEventView(Event event) {
 		DetailEventView detailEventView = new DetailEventView(this, eventController, event);
-		stage.setScene(detailEventView.createScene());
+		setScene(detailEventView.createScene());
 	}
 
 	public void showEditEventView(Event event) {
@@ -73,19 +93,21 @@ public class ViewManager {
 
 	public void showCreatePerson() {
 		CreatePersonView createPersonView = new CreatePersonView(this, eventController);
-		stage.setScene(createPersonView.createSccene());
+		setScene(createPersonView.createSccene());
 	}
 
 	public void showTimelineView() {
 		TimelineView timelineView = new TimelineView(this, eventController);
-		stage.setScene(timelineView.createScene());
-	}
-
-	public void exitToLogin() {
-		stage.setScene(loginScene);
+		setScene(timelineView.createScene());
 	}
 
 	public Stage getStage() {
 		return stage;
 	}
+	
+	public Scene createStandardScene(Parent root) {
+	    Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
+	    return scene;
+	}
+
 }

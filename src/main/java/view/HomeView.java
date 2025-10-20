@@ -44,7 +44,7 @@ public class HomeView {
 		createPerson.setOnAction(e -> viewManager.showCreatePerson());
 		timelineButton.setOnAction(e -> viewManager.showTimelineView());
 		detailButton.setOnAction(e -> viewManager.showUserDetailView(currentUser));
-		logoutButton.setOnAction(e -> viewManager.exitToLogin());
+		logoutButton.setOnAction(e -> viewManager.goBack());
 
 		EventListPane eventList = new EventListPane(eventController.getEvents(),
 				new EventListPane.EventActionHandler() {
@@ -67,6 +67,6 @@ public class HomeView {
 		root.setRight(eventList);
 		root.setBottom(logoutButton);
 				
-		return new Scene(root, 600, 400);
+		return viewManager.createStandardScene(root);
 	}
 }

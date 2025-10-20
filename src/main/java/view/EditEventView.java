@@ -47,7 +47,7 @@ public class EditEventView {
 			viewManager.showShowView();
 		});
 
-		cancelButton.setOnAction(e -> viewManager.showShowView());
+		cancelButton.setOnAction(e -> viewManager.goBack());
 
 		VBox root = new VBox(10, title, nameField, startDatePicker, endDatePicker, descriptionArea, saveButton,
 				cancelButton);

@@ -54,7 +54,7 @@ public class ShowView {
 			}
 		});
 
-		backButton.setOnAction(e -> viewManager.showHomeView(eventController.getUser()));
+		backButton.setOnAction(e -> viewManager.goBack());
 
 		VBox root = new VBox(10, title, eventList, detailButton, backButton);
 		return new Scene(root, 600, 400);

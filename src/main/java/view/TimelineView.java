@@ -27,7 +27,7 @@ public class TimelineView {
 	public Scene createScene() {
         TimelinePane timeline = new TimelinePane(eventController.getEvents());
         Button back = new Button("Back");
-        back.setOnAction(e-> viewManager.showHomeView(eventController.getUser()));
+        back.setOnAction(e-> viewManager.goBack());
 
         VBox root = new VBox(timeline, back);
         return new Scene(root, 800, 450);

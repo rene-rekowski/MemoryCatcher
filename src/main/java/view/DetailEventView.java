@@ -40,7 +40,7 @@ public class DetailEventView {
 			eventController.deleteEvent(event);
 			viewManager.showShowView();
 		});
-		backButton.setOnAction(e -> viewManager.showShowView());
+		backButton.setOnAction(e -> viewManager.goBack());
 
 		VBox root = new VBox(10, title, name, start, end, description, editButton, deleteButton, backButton);
 

@@ -59,7 +59,7 @@ public class CreateEventView{
 
 		
 		
-		backButton.setOnAction(e -> viewManager.showHomeView(eventController.getUser()));
+		backButton.setOnAction(e -> viewManager.goBack());
 		
 		List<Person> selectedPersons = new ArrayList<>();
 		// ComboBox zur Auswahl von Personen

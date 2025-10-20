@@ -28,7 +28,7 @@ public class DetailUserView {
 		Label birthday = new Label("Birthday: " + user.getBirthday());
 
 		Button backButton = new Button("Back");
-		backButton.setOnAction(e -> viewManager.showHomeView(user));
+		backButton.setOnAction(e -> viewManager.goBack());
 
 		VBox root = new VBox(10, title, name, birthday, backButton);
 		return new Scene(root, 400, 250);

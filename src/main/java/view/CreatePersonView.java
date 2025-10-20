@@ -56,7 +56,7 @@ public class CreatePersonView {
 			descriptionArea.clear();
 		});
 
-		backButton.setOnAction(e -> viewManager.showHomeView(eventController.getUser()));
+		backButton.setOnAction(e -> viewManager.goBack());
 		;
 
 		VBox root = new VBox(20, titleLabel, nameField, descriptionArea, saveButton, backButton);
