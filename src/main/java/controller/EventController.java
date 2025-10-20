@@ -10,7 +10,6 @@ import model.Person;
 import model.User;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class EventController {

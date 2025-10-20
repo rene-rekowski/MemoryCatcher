@@ -34,13 +34,6 @@ public class Event {
 		}
 	}
 
-	public Event(String name, String description, LocalDate startDate, List<Person> person) {
-		this(name, description, startDate, null, persons);
-	}
-	public Event(String name, String description, LocalDate startDate) {
-		this(name, description, startDate, null, null);
-	}
-
 	/* getter and setter */
 	public String getName() {
 		return this.name;
