@@ -1,6 +1,5 @@
 package view;
 
-
 import controller.EventController;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -14,22 +13,21 @@ import view.pane.timeline.TimelinePane;
  * @version 1.0
  */
 public class TimelineView {
-	
+
 	private EventController eventController;
 	private ViewManager viewManager;
-	
+
 	public TimelineView(ViewManager viewManager, EventController eventController) {
 		this.viewManager = viewManager;
 		this.eventController = eventController;
 	}
-	
-	
-	public Scene createScene() {
-        TimelinePane timeline = new TimelinePane(eventController.getEvents());
-        Button back = new Button("Back");
-        back.setOnAction(e-> viewManager.goBack());
 
-        VBox root = new VBox(timeline, back);
-        return new Scene(root, 800, 450);
-    }
+	public Scene createScene() {
+		TimelinePane timeline = new TimelinePane(eventController.getEvents());
+		Button back = new Button("Back");
+		back.setOnAction(e -> viewManager.goBack());
+
+		VBox root = new VBox(timeline, back);
+		return viewManager.createStandardScene(root);
+	}
 }

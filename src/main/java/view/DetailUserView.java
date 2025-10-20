@@ -31,6 +31,6 @@ public class DetailUserView {
 		backButton.setOnAction(e -> viewManager.goBack());
 
 		VBox root = new VBox(10, title, name, birthday, backButton);
-		return new Scene(root, 400, 250);
+		return viewManager.createStandardScene(root);
 	}
 }

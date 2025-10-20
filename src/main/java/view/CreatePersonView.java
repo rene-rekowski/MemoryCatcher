@@ -60,7 +60,7 @@ public class CreatePersonView {
 		;
 
 		VBox root = new VBox(20, titleLabel, nameField, descriptionArea, saveButton, backButton);
-		return new Scene(root, 600, 400);
+		return viewManager.createStandardScene(root);
 
 	}
 

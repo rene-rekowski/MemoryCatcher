@@ -44,6 +44,6 @@ public class DetailEventView {
 
 		VBox root = new VBox(10, title, name, start, end, description, editButton, deleteButton, backButton);
 
-		return new Scene(root, 600, 400);
+		return viewManager.createStandardScene(root);
 	}
 }

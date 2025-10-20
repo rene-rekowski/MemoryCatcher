@@ -55,7 +55,7 @@ public class LogInView {
 		});
 
 		VBox root = new VBox(10, title, userListView, createUserButton, exitButton);
-		return new Scene(root, 600, 300);
+		return viewManager.createStandardScene(root);
 	}
 
 	private void showError(String header, String msg) {

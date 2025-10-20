@@ -52,7 +52,7 @@ public class CreateUserView {
 
 		VBox root = new VBox(12, title, nameField, birthdayPicker, createButton, cancelButton);
 		root.setPrefSize(600, 300);
-		return new Scene(root);
+		return viewManager.createStandardScene(root);
 	}
 
 	private void showError(String message) {

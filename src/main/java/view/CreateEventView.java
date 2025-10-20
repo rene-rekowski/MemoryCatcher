@@ -105,7 +105,7 @@ public class CreateEventView{
 		VBox root = new VBox(10, titleLabel, nameField,startPicker, endPicker, descriptionArea, personComboBox, selectedListView, saveButton, backButton);
 		root.setPadding(new Insets(20));
 
-		return new Scene(root, 600, 400);
+		return viewManager.createStandardScene(root);
 	}
 
 	/**

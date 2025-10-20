@@ -51,7 +51,7 @@ public class EditEventView {
 
 		VBox root = new VBox(10, title, nameField, startDatePicker, endDatePicker, descriptionArea, saveButton,
 				cancelButton);
-		return new Scene(root, 600, 400);
+		return viewManager.createStandardScene(root);
 	}
 
 	private void showError(String msg) {
