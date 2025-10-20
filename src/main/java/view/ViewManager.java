@@ -47,6 +47,7 @@ public class ViewManager {
 	    if (current != null) {
 	        sceneHistory.push(current);
 	    }
+	    newScene.getStylesheets().add(getClass().getResource("/styles/app.css").toExternalForm());
 	    stage.setScene(newScene);
 	}
 	
@@ -88,7 +89,7 @@ public class ViewManager {
 
 	public void showEditEventView(Event event) {
 		EditEventView editEventView = new EditEventView(this, eventController, event);
-		stage.setScene(editEventView.createScene());
+		setScene(editEventView.createScene());
 	}
 
 	public void showCreatePerson() {
