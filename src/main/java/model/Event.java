@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents an Event of an user
+ * Represents an Event of a user
  * 
  * @author rene-rekowski
  * @Vesion 1.0
@@ -15,13 +15,13 @@ public class Event {
 	private LocalDate startDate;
 	private LocalDate endDate;
 	private String description;
-	// TODO: Gefühle und Personen wären gut
-	private static List<Person> persons;
+	// TODO: add Feeling 
+	private List<Person> persons;
 	
-	/* Constucktor*/
 	public Event(String name, String description, LocalDate startDate, LocalDate endDate, List<Person> persons) {
 		validateeName(name);
 		validateDescription(description);
+		validateDate(startDate, endDate);
 
 		this.name = name;
 		this.description = description;
@@ -93,6 +93,15 @@ public class Event {
 		}
 		if (description.length() >= 500) {
 			throw new IllegalArgumentException("description must shorter than 500 charater");
+		}
+	}
+	
+	private void validateDate(LocalDate startDate, LocalDate endDate) {
+		if (startDate == null && endDate != null) {
+			throw new IllegalArgumentException("when endDate exist startDate must not empty");
+		}
+		if (startDate.isAfter(endDate)) {
+			throw new IllegalArgumentException("endDate must happend after startDate");
 		}
 	}
 
