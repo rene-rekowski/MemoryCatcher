@@ -89,7 +89,7 @@ public class ViewManager {
 
 	public void showCreatePerson() {
 		CreatePersonView createPersonView = new CreatePersonView(this, eventController);
-		setScene(createPersonView.createSccene());
+		setScene(createPersonView.createScene());
 	}
 
 	public void showTimelineView() {

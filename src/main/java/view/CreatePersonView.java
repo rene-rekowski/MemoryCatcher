@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import view.utils.AlertUtil;
 
 /*
  * CreatePersonView can the user create Person
@@ -15,7 +16,7 @@ import javafx.scene.layout.VBox;
  * @author rene-rekowski
  * @version 1.0
  */
-public class CreatePersonView {
+public class CreatePersonView implements View{
 
 	private final ViewManager viewManager;
 	private final EventController eventController;
@@ -25,7 +26,7 @@ public class CreatePersonView {
 		this.eventController = eventController;
 	}
 
-	public Scene createSccene() {
+	public Scene createScene() {
 		Label titleLabel = new Label("creat a new Person");
 
 		TextField nameField = new TextField();
@@ -40,14 +41,14 @@ public class CreatePersonView {
 		saveButton.setOnAction(e -> {
 			String name = nameField.getText().trim();
 			String description = descriptionArea.getText().trim();
-
+			
 			if (name.isEmpty()) {
-				showAlert(Alert.AlertType.WARNING, "Missing Name", "Please enter an event name.");
+				AlertUtil.showWarning( "Missing Name", "Please enter an event name.");
 				return;
 			}
 
 			if (description.isEmpty()) {
-				showAlert(Alert.AlertType.WARNING, "Missing Description", "Please enter a description.");
+				AlertUtil.showWarning("Missing Description", "Please enter a description.");
 				return;
 			}
 
@@ -63,16 +64,4 @@ public class CreatePersonView {
 		return viewManager.createStandardScene(root);
 
 	}
-
-	/**
-	 * Zeigt eine einfache Alert-Nachricht an.
-	 */
-	private void showAlert(Alert.AlertType type, String title, String message) {
-		Alert alert = new Alert(type);
-		alert.setTitle(title);
-		alert.setHeaderText(null);
-		alert.setContentText(message);
-		alert.showAndWait();
-	}
-
 }

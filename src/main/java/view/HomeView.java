@@ -8,7 +8,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import model.Event;
 import model.User;
-import view.pane.EventListPane;
+import view.panes.EventListPane;
 
 /**
  * Startseite nach Login eines Users.
@@ -16,7 +16,7 @@ import view.pane.EventListPane;
  * @author rene-rekowski
  * @version 1.0
  */
-public class HomeView {
+public class HomeView implements View{
 
 	private final ViewManager viewManager;
 	private final EventController eventController;

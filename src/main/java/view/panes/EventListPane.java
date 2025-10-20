@@ -1,4 +1,4 @@
-package view.pane;
+package view.panes;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;

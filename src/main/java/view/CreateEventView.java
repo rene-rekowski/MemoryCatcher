@@ -10,15 +10,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import model.Person;
+import view.utils.AlertUtil;
 
 //TODO: sepation of the Pane
 /**
- * Die AddEventView ermöglicht es dem Benutzer, ein neues Event anzulegen.
+ * CreateEventView create a event and add it to the user
  * 
  * @author rene-rekowski
  * @version 1.0
  */
-public class CreateEventView{
+public class CreateEventView implements View{
 	
 	private final ViewManager viewManager;
 	private final EventController eventController;
@@ -56,9 +57,6 @@ public class CreateEventView{
 
 		Button saveButton = new Button("Save Event");
 		Button backButton = new Button("Back");
-
-		
-		
 		backButton.setOnAction(e -> viewManager.goBack());
 		
 		List<Person> selectedPersons = new ArrayList<>();
@@ -89,33 +87,20 @@ public class CreateEventView{
 			LocalDate endDate = endPicker.getValue();
 
 			if (name.isEmpty()) {
-				showAlert(Alert.AlertType.WARNING, "Missing Name", "Please enter an event name.");
+				AlertUtil.showWarning( "Missing Name", "Please enter an event name.");
 				return;
 			}
 
 			eventController.addEvent(name, description, startDate, endDate, selectedPersons);
-			showAlert(Alert.AlertType.INFORMATION, "Success", "Event successfully added!");
+			AlertUtil.showInfo("Success", "Event successfully added!");
 			nameField.clear();
 		    descriptionArea.clear();
 		    selectedPersons.clear();
 		    selectedListView.getItems().clear();
 		});
         
-		// Layout
 		VBox root = new VBox(10, titleLabel, nameField,startPicker, endPicker, descriptionArea, personComboBox, selectedListView, saveButton, backButton);
-		root.setPadding(new Insets(20));
 
 		return viewManager.createStandardScene(root);
-	}
-
-	/**
-	 * Zeigt eine einfache Alert-Nachricht an.
-	 */
-	private void showAlert(Alert.AlertType type, String title, String message) {
-		Alert alert = new Alert(type);
-		alert.setTitle(title);
-		alert.setHeaderText(null);
-		alert.setContentText(message);
-		alert.showAndWait();
 	}
 }

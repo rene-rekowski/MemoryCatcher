@@ -12,7 +12,7 @@ import model.User;
  * @author rene-rekowski
  * @version 1.0
  */
-public class DetailUserView {
+public class DetailUserView implements View{
 
 	private final ViewManager viewManager;
 	private final User user;

@@ -4,6 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import model.Event;
+import view.utils.AlertUtil;
 
 import java.time.LocalDate;
 
@@ -15,15 +16,13 @@ import controller.EventController;
  * @author rene-rekowski
  * @version 1.0
  */
-public class EditEventView {
+public class EditEventView implements View{
 
 	private final ViewManager viewManager;
-	private final EventController eventController;
 	private final Event event;
 
 	public EditEventView(ViewManager viewManager, EventController eventController, Event event) {
 		this.viewManager = viewManager;
-		this.eventController = eventController;
 		this.event = event;
 	}
 
@@ -39,12 +38,15 @@ public class EditEventView {
 		Button cancelButton = new Button("Cancel");
 
 		saveButton.setOnAction(e -> {
-
-			event.setName(nameField.getText());
-			event.setStartDate(startDatePicker.getValue());
-			event.setEndDate(endDatePicker.getValue());
-			event.setDescription(descriptionArea.getText());
-			viewManager.goBack();
+			try {
+				event.setName(nameField.getText());
+				event.setStartDate(startDatePicker.getValue());
+				event.setEndDate(endDatePicker.getValue());
+				event.setDescription(descriptionArea.getText());
+				viewManager.goBack();
+			} catch (IllegalArgumentException ex) {
+				AlertUtil.showError("invaild Argument: ", ex.getMessage());
+			}
 		});
 
 		cancelButton.setOnAction(e -> viewManager.goBack());
@@ -54,9 +56,4 @@ public class EditEventView {
 		return viewManager.createStandardScene(root);
 	}
 
-	private void showError(String msg) {
-		Alert alert = new Alert(Alert.AlertType.ERROR);
-		alert.setContentText(msg);
-		alert.showAndWait();
-	}
 }

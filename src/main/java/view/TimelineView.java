@@ -12,7 +12,7 @@ import view.pane.timeline.TimelinePane;
  * @author rene-rekowski
  * @version 1.0
  */
-public class TimelineView {
+public class TimelineView implements View{
 
 	private EventController eventController;
 	private ViewManager viewManager;

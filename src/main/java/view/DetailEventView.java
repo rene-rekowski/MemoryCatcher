@@ -12,7 +12,7 @@ import model.Event;
  * @author rene-rekowski
  * @version 1.0
  */
-public class DetailEventView {
+public class DetailEventView implements View{
 
 	private final ViewManager viewManager;
 	private final EventController eventController;

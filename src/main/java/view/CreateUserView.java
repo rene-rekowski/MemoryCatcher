@@ -3,19 +3,19 @@ package view;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import view.utils.AlertUtil;
 
 import java.time.LocalDate;
 
 import controller.UserController;
 
-//TODO: vaildierung ist not esseiy
 /**
- * View zum Erstellen eines neuen Benutzers.
+ * View for create a user
  * 
  * @author rene-rekowski
  * @version 1.0
  */
-public class CreateUserView {
+public class CreateUserView implements View{
 
 	private final ViewManager viewManager;
 	private final UserController userController;
@@ -44,21 +44,13 @@ public class CreateUserView {
 				userController.addUser(name, birthday);
 				viewManager.showLoginView();
 			} catch (IllegalArgumentException ex) {
-				showError("Invalid input: " + ex.getMessage());
+				AlertUtil.showError("Invalid input: ", ex.getMessage());
 			}
 		});
 
 		cancelButton.setOnAction(e -> viewManager.goBack());
 
 		VBox root = new VBox(12, title, nameField, birthdayPicker, createButton, cancelButton);
-		root.setPrefSize(600, 300);
 		return viewManager.createStandardScene(root);
-	}
-
-	private void showError(String message) {
-		Alert a = new Alert(Alert.AlertType.ERROR);
-		a.setTitle("Fehler");
-		a.setContentText(message);
-		a.showAndWait();
 	}
 }

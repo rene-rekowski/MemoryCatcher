@@ -18,7 +18,7 @@ import model.User;
  * @author rene-rekowski
  * @version 1.0
  */
-public class LogInView {
+public class LogInView implements View{
 
 	private final ViewManager viewManager;
 	private final UserController userController;
@@ -56,13 +56,5 @@ public class LogInView {
 
 		VBox root = new VBox(10, title, userListView, createUserButton, exitButton);
 		return viewManager.createStandardScene(root);
-	}
-
-	private void showError(String header, String msg) {
-		Alert alert = new Alert(Alert.AlertType.ERROR);
-		alert.setTitle("Fehler");
-		alert.setHeaderText(header);
-		alert.setContentText(msg);
-		alert.showAndWait();
 	}
 }
