@@ -71,9 +71,7 @@ class EventControllerTest {
     }
 
 
-    // ==========================================================
-    // TEST: addEvent fügt neues Event hinzu
-    // ==========================================================
+
     @Test
     void testAddEventAddsToListAndRepo() {
         try (MockedConstruction<EventRepository> eventRepoMock = mockConstruction(EventRepository.class);
@@ -93,9 +91,6 @@ class EventControllerTest {
         }
     }
 
-    // ==========================================================
-    // TEST: addPerson fügt neue Person hinzu
-    // ==========================================================
     @Test
     void testAddPersonAddsToUserAndRepo() {
         try (MockedConstruction<PersonRepository> personRepoMock = mockConstruction(PersonRepository.class);
@@ -112,9 +107,6 @@ class EventControllerTest {
         }
     }
 
-    // ==========================================================
-    // TEST: deleteEvent entfernt Event korrekt
-    // ==========================================================
     @Test
     void testDeleteEventRemovesAndDeletesInRepo() {
         try (MockedConstruction<EventRepository> eventRepoMock = mockConstruction(EventRepository.class);
@@ -133,9 +125,7 @@ class EventControllerTest {
         }
     }
 
-    // ==========================================================
-    // TEST: loadPersons lädt Personen korrekt
-    // ==========================================================
+
     @Test
     void testLoadPersonsReplacesList() {
         List<Person> fakePersons = List.of(new Person("Alice", "Best friend"));
@@ -148,11 +138,9 @@ class EventControllerTest {
                      when(mock.findUserId(any())).thenReturn(4));
              MockedConstruction<EventRepository> eventRepoMock = mockConstruction(EventRepository.class)) {
 
-            // Spy, damit Konstruktor nicht sofort loadPersons() ausführt
             EventController controller = spy(new EventController(mockUser));
             doNothing().when(controller).loadPersons(); // ruft es im Konstruktor nicht auf
 
-            // Jetzt manuell aufrufen
             controller.loadPersons();
 
             verify(spyList, times(1)).setAll(fakePersons);
