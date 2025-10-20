@@ -5,7 +5,7 @@ import controller.EventController;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
-import view.timeline.TimelinePane;
+import view.pane.timeline.TimelinePane;
 
 /**
  * View show event in a timeline
