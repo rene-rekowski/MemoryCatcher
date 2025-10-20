@@ -44,7 +44,7 @@ public class EditEventView {
 			event.setStartDate(startDatePicker.getValue());
 			event.setEndDate(endDatePicker.getValue());
 			event.setDescription(descriptionArea.getText());
-			viewManager.showShowView();
+			viewManager.goBack();
 		});
 
 		cancelButton.setOnAction(e -> viewManager.goBack());

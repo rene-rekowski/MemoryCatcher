@@ -38,7 +38,7 @@ public class DetailEventView {
 		editButton.setOnAction(e -> viewManager.showEditEventView(event));
 		deleteButton.setOnAction(e -> {
 			eventController.deleteEvent(event);
-			viewManager.showShowView();
+			viewManager.goBack();
 		});
 		backButton.setOnAction(e -> viewManager.goBack());
 

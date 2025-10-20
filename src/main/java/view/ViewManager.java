@@ -72,11 +72,6 @@ public class ViewManager {
 		setScene(createEventView.createScene());
 	}
 
-	public void showShowView() {
-		ShowView showView = new ShowView(this, eventController);
-		setScene(showView.createScene());
-	}
-
 	public void showUserDetailView(User user) {
 		DetailUserView userDetailView = new DetailUserView(this, user);
 		setScene(userDetailView.createScene());

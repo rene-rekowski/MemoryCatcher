@@ -32,7 +32,6 @@ public class HomeView {
 		Label title = new Label("Hello " + currentUser.getName() + "! Birthday: " + currentUser.getBirthday());
 
 		Button addEventButton = new Button("Add Event");
-		Button showEventsButton = new Button("Show Events");
 		Button createPerson = new Button("add Person");
 		Button timelineButton = new Button("timeline");
 		Button detailButton = new Button("User Details");
@@ -40,7 +39,6 @@ public class HomeView {
 		Button logoutButton = new Button("Logout");
 
 		addEventButton.setOnAction(e -> viewManager.showAddEventView());
-		showEventsButton.setOnAction(e -> viewManager.showShowView());
 		createPerson.setOnAction(e -> viewManager.showCreatePerson());
 		timelineButton.setOnAction(e -> viewManager.showTimelineView());
 		detailButton.setOnAction(e -> viewManager.showUserDetailView(currentUser));
