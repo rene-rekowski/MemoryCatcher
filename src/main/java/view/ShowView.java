@@ -8,6 +8,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import model.Event;
 
+//TODO: delet because is know on in the Home scream
+
 /**
  * View zum Anzeigen aller Events.
  * 

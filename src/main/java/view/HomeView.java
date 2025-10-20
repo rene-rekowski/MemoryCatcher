@@ -4,8 +4,11 @@ import controller.EventController;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import model.Event;
 import model.User;
+import view.pane.EventListPane;
 
 /**
  * Startseite nach Login eines Users.
@@ -43,9 +46,27 @@ public class HomeView {
 		detailButton.setOnAction(e -> viewManager.showUserDetailView(currentUser));
 		logoutButton.setOnAction(e -> viewManager.exitToLogin());
 
-		VBox root = new VBox(15, title, addEventButton, showEventsButton, createPerson, timelineButton, detailButton,
-				deleteUserButton, logoutButton);
+		EventListPane eventList = new EventListPane(eventController.getEvents(),
+				new EventListPane.EventActionHandler() {
+					@Override
+					public void onDetail(Event event) {
+						viewManager.showDetailEventView(event);
+					}
 
+					@Override
+					public void onDelete(Event event) {
+						eventController.deleteEvent(event);
+					}
+				});
+	
+		
+		VBox buttonPane = new VBox(15, title, addEventButton, createPerson, timelineButton,
+				detailButton,	deleteUserButton, logoutButton);
+		BorderPane root = new BorderPane();
+		root.setLeft(buttonPane);
+		root.setRight(eventList);
+		root.setBottom(logoutButton);
+				
 		return new Scene(root, 600, 400);
 	}
 }
