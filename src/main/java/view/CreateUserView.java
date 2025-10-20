@@ -40,26 +40,12 @@ public class CreateUserView {
 		createButton.setOnAction(e -> {
 			String name = nameField.getText();
 			LocalDate birthday = birthdayPicker.getValue();
-
-			// Validierung
-			if (name == null || name.isBlank()) {
-				showError("Ungültiger Name", "Der Name darf nicht leer sein.");
-				return;
+			try {
+				userController.addUser(name, birthday);
+				viewManager.showLoginView();
+			} catch (IllegalArgumentException ex) {
+				showError("Invalid input: " + ex.getMessage());
 			}
-			if (name.length() > 30) {
-				showError("Ungültiger Name", "Der Name darf maximal 30 Zeichen haben.");
-				return;
-			}
-			if (birthday == null) {
-				showError("Ungültiges Geburtsdatum", "Bitte wähle ein Geburtsdatum aus.");
-				return;
-			}
-
-			// Benutzer anlegen und speichern
-			userController.addUser(name, birthday);
-
-			// Zurück zur Login-Ansicht (aktualisiert die Liste dort)
-			viewManager.showLoginView();
 		});
 
 		cancelButton.setOnAction(e -> viewManager.showLoginView());
@@ -69,10 +55,9 @@ public class CreateUserView {
 		return new Scene(root);
 	}
 
-	private void showError(String header, String message) {
+	private void showError(String message) {
 		Alert a = new Alert(Alert.AlertType.ERROR);
 		a.setTitle("Fehler");
-		a.setHeaderText(header);
 		a.setContentText(message);
 		a.showAndWait();
 	}
