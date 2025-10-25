@@ -1,4 +1,4 @@
-package view.pane.timeline;
+package view.panes.timeline;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;

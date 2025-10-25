@@ -22,7 +22,7 @@ public class ViewManager {
 	private final UserController userController;
 	private EventController eventController;
 	
-	private final Deque<Scene> sceneHistory = new ArrayDeque<>();
+	private final Deque<Scene> sceneHistory = new ArrayDeque<>(); //history to go back on the preview scene
 	
 	private static final int SCENE_WIDTH = 800;
 	private static final int SCENE_HEIGHT = 600;
@@ -44,6 +44,7 @@ public class ViewManager {
 	
 	private void setScene(Scene newScene) {
 	    Scene current = stage.getScene();
+	    //rember previewly scene
 	    if (current != null) {
 	        sceneHistory.push(current);
 	    }

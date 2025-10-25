@@ -12,42 +12,28 @@ import javafx.scene.layout.VBox;
 import model.Person;
 import view.utils.AlertUtil;
 
-//TODO: sepation of the Pane
 /**
  * CreateEventView create a event and add it to the user
  * 
  * @author rene-rekowski
  * @version 1.0
  */
-public class CreateEventView implements View{
-	
+public class CreateEventView implements View {
+
 	private final ViewManager viewManager;
 	private final EventController eventController;
-	
 
-	/**
-	 * Erstellt die View zum Hinzufügen eines Events.
-	 * 
-	 * @param eventController Controller zur Verwaltung der Events
-	 * @param homeView        Referenz auf die HomeView (für Navigation zurück)
-	 */
-	public CreateEventView(ViewManager viewManager,EventController eventController) {
+	public CreateEventView(ViewManager viewManager, EventController eventController) {
 		this.eventController = eventController;
 		this.viewManager = viewManager;
 	}
 
-	/**
-	 * Erstellt die Szene zum Hinzufügen eines Events.
-	 * 
-	 * @param primaryStage Die Hauptbühne der Anwendung
-	 * @return Eine Scene mit den Eingabefeldern und Buttons
-	 */
 	public Scene createScene() {
 		Label titleLabel = new Label("Add New Event");
 
 		TextField nameField = new TextField();
 		nameField.setPromptText("Event name");
-		
+
 		DatePicker startPicker = new DatePicker();
 		DatePicker endPicker = new DatePicker();
 
@@ -59,47 +45,49 @@ public class CreateEventView implements View{
 		Button backButton = new Button("Back");
 		backButton.setOnAction(e -> viewManager.goBack());
 		
+		//TODO: sepation of the Pane
 		List<Person> selectedPersons = new ArrayList<>();
 		// ComboBox zur Auswahl von Personen
-        ComboBox<Person> personComboBox = new ComboBox<>();
-        personComboBox.getItems().addAll(eventController.getUser().getPersons());
-        personComboBox.setPromptText("Select person to add");
+		ComboBox<Person> personComboBox = new ComboBox<>();
+		personComboBox.getItems().addAll(eventController.getUser().getPersons());
+		personComboBox.setPromptText("Select person to add");
 
-        // ListView zur Anzeige der ausgewählten Personen
-        ListView<Person> selectedListView = new ListView<>();
-        selectedListView.setPlaceholder(new Label("No persons added yet"));
+		// ListView zur Anzeige der ausgewählten Personen
+		ListView<Person> selectedListView = new ListView<>();
+		selectedListView.setPlaceholder(new Label("No persons added yet"));
 
-        // Wenn eine Person in der ComboBox ausgewählt wird → zur Liste hinzufügen
-        personComboBox.setOnAction(e -> {
-            Person selected = personComboBox.getValue();
-            if (selected != null && !selectedPersons.contains(selected)) {
-                selectedPersons.add(selected);
-                selectedListView.getItems().add(selected);
-            }
-            // ComboBox zurücksetzen, damit man dieselbe Person nicht nochmal wählt
-            personComboBox.getSelectionModel().clearSelection();
-        });
-		
-        saveButton.setOnAction(e -> {
+		// Wenn eine Person in der ComboBox ausgewählt wird → zur Liste hinzufügen
+		personComboBox.setOnAction(e -> {
+			Person selected = personComboBox.getValue();
+			if (selected != null && !selectedPersons.contains(selected)) {
+				selectedPersons.add(selected);
+				selectedListView.getItems().add(selected);
+			}
+			// ComboBox zurücksetzen, damit man dieselbe Person nicht nochmal wählt
+			personComboBox.getSelectionModel().clearSelection();
+		});
+
+		saveButton.setOnAction(e -> {
 			String name = nameField.getText().trim();
 			String description = descriptionArea.getText().trim();
 			LocalDate startDate = startPicker.getValue();
 			LocalDate endDate = endPicker.getValue();
 
-			if (name.isEmpty()) {
-				AlertUtil.showWarning( "Missing Name", "Please enter an event name.");
-				return;
+			try {
+				eventController.addEvent(name, description, startDate, endDate, selectedPersons);
+				AlertUtil.showInfo("Success", "Event successfully added!");
+			} catch (IllegalArgumentException ex) {
+				AlertUtil.showError("invaild Argument", ex.getMessage());
 			}
-
-			eventController.addEvent(name, description, startDate, endDate, selectedPersons);
-			AlertUtil.showInfo("Success", "Event successfully added!");
 			nameField.clear();
-		    descriptionArea.clear();
-		    selectedPersons.clear();
-		    selectedListView.getItems().clear();
+			descriptionArea.clear();
+			selectedPersons.clear();
+			selectedListView.getItems().clear();
+			//TODO: clear Datepicker
 		});
-        
-		VBox root = new VBox(10, titleLabel, nameField,startPicker, endPicker, descriptionArea, personComboBox, selectedListView, saveButton, backButton);
+
+		VBox root = new VBox(10, titleLabel, nameField, startPicker, endPicker, descriptionArea, personComboBox,
+				selectedListView, saveButton, backButton);
 
 		return viewManager.createStandardScene(root);
 	}

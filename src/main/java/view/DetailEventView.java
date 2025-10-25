@@ -7,7 +7,7 @@ import javafx.scene.layout.VBox;
 import model.Event;
 
 /**
- * View zur Anzeige der Details eines Events.
+ * View show event-information
  * 
  * @author rene-rekowski
  * @version 1.0
@@ -43,7 +43,6 @@ public class DetailEventView implements View{
 		backButton.setOnAction(e -> viewManager.goBack());
 
 		VBox root = new VBox(10, title, name, start, end, description, editButton, deleteButton, backButton);
-
 		return viewManager.createStandardScene(root);
 	}
 }

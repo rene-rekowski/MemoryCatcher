@@ -1,4 +1,4 @@
-package view.pane.timeline;
+package view.panes.timeline;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -29,8 +29,7 @@ public class TimelineEventBar extends Pane {
 
         getChildren().addAll(bar, label);
 
-        // optional: Hover-Effekt
-        bar.setOnMouseEntered(e -> bar.setFill(Color.LIGHTBLUE));
-        bar.setOnMouseExited(e -> bar.setFill(Color.DODGERBLUE));
+        bar.setOnMouseEntered(e -> bar.setFill(Color.BLACK));
+        bar.setOnMouseExited(e -> bar.setFill(Color.GRAY));
     }
 }

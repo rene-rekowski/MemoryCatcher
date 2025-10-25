@@ -7,7 +7,7 @@ import javafx.scene.layout.VBox;
 import model.User;
 
 /**
- * View mit Benutzerinformationen.
+ * View with user-information
  * 
  * @author rene-rekowski
  * @version 1.0
@@ -28,9 +28,10 @@ public class DetailUserView implements View{
 		Label birthday = new Label("Birthday: " + user.getBirthday());
 
 		Button backButton = new Button("Back");
+		
 		backButton.setOnAction(e -> viewManager.goBack());
 
-		VBox root = new VBox(10, title, name, birthday, backButton);
+		VBox root = new VBox(10, title, name, birthday, backButton);		
 		return viewManager.createStandardScene(root);
 	}
 }

@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import controller.EventController;
 
 /**
- * View zum Bearbeiten eines Events.
+ * View for editing an event
  * 
  * @author rene-rekowski
  * @version 1.0
@@ -35,7 +35,7 @@ public class EditEventView implements View{
 		TextArea descriptionArea = new TextArea(event.getDescription());
 
 		Button saveButton = new Button("Save Changes");
-		Button cancelButton = new Button("Cancel");
+		Button backButton = new Button("Back");
 
 		saveButton.setOnAction(e -> {
 			try {
@@ -49,10 +49,10 @@ public class EditEventView implements View{
 			}
 		});
 
-		cancelButton.setOnAction(e -> viewManager.goBack());
+		backButton.setOnAction(e -> viewManager.goBack());
 
 		VBox root = new VBox(10, title, nameField, startDatePicker, endDatePicker, descriptionArea, saveButton,
-				cancelButton);
+				backButton);
 		return viewManager.createStandardScene(root);
 	}
 

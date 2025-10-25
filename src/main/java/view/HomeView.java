@@ -11,12 +11,12 @@ import model.User;
 import view.panes.EventListPane;
 
 /**
- * Startseite nach Login eines Users.
+ * View all interactiveView from the User
  * 
  * @author rene-rekowski
  * @version 1.0
  */
-public class HomeView implements View{
+public class HomeView implements View {
 
 	private final ViewManager viewManager;
 	private final EventController eventController;
@@ -37,13 +37,7 @@ public class HomeView implements View{
 		Button detailButton = new Button("User Details");
 		Button deleteUserButton = new Button("Delete User");
 		Button logoutButton = new Button("Logout");
-
-		addEventButton.setOnAction(e -> viewManager.showAddEventView());
-		createPerson.setOnAction(e -> viewManager.showCreatePerson());
-		timelineButton.setOnAction(e -> viewManager.showTimelineView());
-		detailButton.setOnAction(e -> viewManager.showUserDetailView(currentUser));
-		logoutButton.setOnAction(e -> viewManager.goBack());
-
+		
 		EventListPane eventList = new EventListPane(eventController.getEvents(),
 				new EventListPane.EventActionHandler() {
 					@Override
@@ -56,15 +50,21 @@ public class HomeView implements View{
 						eventController.deleteEvent(event);
 					}
 				});
-	
+
+		addEventButton.setOnAction(e -> viewManager.showAddEventView());
+		createPerson.setOnAction(e -> viewManager.showCreatePerson());
+		timelineButton.setOnAction(e -> viewManager.showTimelineView());
+		detailButton.setOnAction(e -> viewManager.showUserDetailView(currentUser));
+		logoutButton.setOnAction(e -> viewManager.goBack());
+
+
 		
-		VBox buttonPane = new VBox(15, title, addEventButton, createPerson, timelineButton,
-				detailButton,	deleteUserButton, logoutButton);
+		VBox buttonPane = new VBox(15, title, addEventButton, createPerson, timelineButton, detailButton,
+				deleteUserButton, logoutButton);
 		BorderPane root = new BorderPane();
 		root.setLeft(buttonPane);
 		root.setRight(eventList);
 		root.setBottom(logoutButton);
-				
 		return viewManager.createStandardScene(root);
 	}
 }

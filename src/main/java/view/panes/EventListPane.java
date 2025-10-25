@@ -1,16 +1,24 @@
 package view.panes;
 
 import javafx.collections.ObservableList;
+
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import model.Event;
 
+/*
+ * îs a list of event with a button for detail and delet a event
+ * 
+ * @author rene-rekowski
+ * @version 1.0
+ */
 public class EventListPane extends VBox {
 
     private final ListView<Event> eventListView;
     private final Button detailButton;
     private final Button deleteButton;
-
+    
+    // interface to customize delet an detail button
     public interface EventActionHandler {
         void onDetail(Event event);
         void onDelete(Event event);

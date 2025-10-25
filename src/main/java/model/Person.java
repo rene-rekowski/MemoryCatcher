@@ -9,14 +9,14 @@ package model;
 public class Person {
 	private String name;
 	private String description;
-	
-	public Person(String name) {
-		this.name = name;
-		
-	}
+	//TODO: invailds
 	public Person(String name, String description) {
 		this.name = name;
 		this.description = description;
+	}
+	
+	public Person(String name) {
+		this(name, "");
 	}
 	public String getName() {
 		return this.name;

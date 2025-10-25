@@ -4,7 +4,7 @@ import controller.EventController;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
-import view.pane.timeline.TimelinePane;
+import view.panes.timeline.TimelinePane;
 
 /**
  * View show event in a timeline
@@ -12,7 +12,7 @@ import view.pane.timeline.TimelinePane;
  * @author rene-rekowski
  * @version 1.0
  */
-public class TimelineView implements View{
+public class TimelineView implements View {
 
 	private EventController eventController;
 	private ViewManager viewManager;
@@ -25,6 +25,7 @@ public class TimelineView implements View{
 	public Scene createScene() {
 		TimelinePane timeline = new TimelinePane(eventController.getEvents());
 		Button back = new Button("Back");
+
 		back.setOnAction(e -> viewManager.goBack());
 
 		VBox root = new VBox(timeline, back);

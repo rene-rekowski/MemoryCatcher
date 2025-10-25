@@ -13,7 +13,7 @@ import javafx.scene.layout.VBox;
 import model.User;
 
 /**
- * Startbildschirm: zeigt alle User an und erlaubt das Login.
+ * startView for Login a user or create and switch in homescreem
  * 
  * @author rene-rekowski
  * @version 1.0
@@ -30,13 +30,16 @@ public class LogInView implements View{
 
 	public Scene createScene() {
 		Label title = new Label("MemoryCatcher");
+		
 		Button createUserButton = new Button("Create User");
 		Button exitButton = new Button("Exit");
+		
 		ListView<User> userListView = new ListView<>(userController.getUsers());
 
 		createUserButton.setOnAction(e -> viewManager.showCreateUserView());
 		exitButton.setOnAction(e -> Platform.exit());
-
+		
+		// init tabele for show all user
 		userListView.setCellFactory(listView -> new ListCell<>() {
 			@Override
 			protected void updateItem(User user, boolean empty) {

@@ -5,7 +5,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 /**
- * Einstiegspunkt der Anwendung.
+ * start of the application
  * 
  * @author rene-rekowski
  * @version 1.0

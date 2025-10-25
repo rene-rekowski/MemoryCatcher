@@ -11,12 +11,12 @@ import javafx.scene.layout.VBox;
 import view.utils.AlertUtil;
 
 /*
- * CreatePersonView can the user create Person
+ * CreatePersonView create person for the user
  * 
  * @author rene-rekowski
  * @version 1.0
  */
-public class CreatePersonView implements View{
+public class CreatePersonView implements View {
 
 	private final ViewManager viewManager;
 	private final EventController eventController;
@@ -31,7 +31,6 @@ public class CreatePersonView implements View{
 
 		TextField nameField = new TextField();
 		nameField.setPromptText("Person name");
-
 		TextArea descriptionArea = new TextArea();
 		descriptionArea.setPromptText("description");
 
@@ -41,22 +40,14 @@ public class CreatePersonView implements View{
 		saveButton.setOnAction(e -> {
 			String name = nameField.getText().trim();
 			String description = descriptionArea.getText().trim();
-			
-			if (name.isEmpty()) {
-				AlertUtil.showWarning( "Missing Name", "Please enter an event name.");
-				return;
+			try {
+				eventController.addPerson(name, description);
+				nameField.clear();
+				descriptionArea.clear();
+			} catch (IllegalArgumentException ex) {
+				AlertUtil.showError("invaild Argument", ex.getMessage());
 			}
-
-			if (description.isEmpty()) {
-				AlertUtil.showWarning("Missing Description", "Please enter a description.");
-				return;
-			}
-
-			eventController.addPerson(name, description);
-			nameField.clear();
-			descriptionArea.clear();
 		});
-
 		backButton.setOnAction(e -> viewManager.goBack());
 		;
 

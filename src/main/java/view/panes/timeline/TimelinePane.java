@@ -1,4 +1,4 @@
-package view.pane.timeline;
+package view.panes.timeline;
 
 import javafx.scene.layout.Pane;
 import model.Event;
